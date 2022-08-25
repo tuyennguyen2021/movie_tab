@@ -11,23 +11,23 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [searchValue, setsearchValue] = useState("avengers");
 
-  // const getMovieRequest = async (searchValue) => {
-  //   const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=bd62e1e`;
-  //   const response = await fetch(url);
-  //   const responseJson = await response.json();
-  //   if (responseJson.Search) {
-  //     setMovies(responseJson.Search);
-  //   }
-  // };
-
-  const getMovieRequest = (searchValue) => {
-    axios
-      .get(`http://www.omdbapi.com/?s=${searchValue}&apikey=bd62e1e`)
-      .then((response) => {
-        console.log(response);
-        setMovies(response.data.Search);
-      });
+  const getMovieRequest = async (searchValue) => {
+    const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=bd62e1e`;
+    const response = await fetch(url);
+    const responseJson = await response.json();
+    if (responseJson.Search) {
+      setMovies(responseJson.Search);
+    }
   };
+
+  // const getMovieRequest = (searchValue) => {
+  //   axios
+  //     .get(`http://www.omdbapi.com/?s=${searchValue}&apikey=bd62e1e`)
+  //     .then((response) => {
+  //       console.log(response);
+  //       setMovies(response.data.Search);
+  //     });
+  // };
 
   useEffect(() => {
     getMovieRequest(searchValue);
