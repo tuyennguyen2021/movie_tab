@@ -43,7 +43,7 @@ function App() {
   };
 
   const AddFavorMovie = (movie) => {
-    const newFavorList = [...favor, movie];
+    const newFavorList = { ...favor, movie };
     setFavor(newFavorList);
     saveToLocalStorage(newFavorList);
   };
