@@ -9,8 +9,9 @@ function App() {
   const [favor, setFavor] = useState([]);
   const [movies, setMovies] = useState([]);
   const [searchValue, setsearchValue] = useState("avengers");
-  const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=bd62e1e`;
-  const getMovieRequest = async () => {
+
+  const getMovieRequest = async (searchValue) => {
+    const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=bd62e1e`;
     const response = await fetch(url);
     const responseJson = await response.json();
     if (responseJson.Search) {
