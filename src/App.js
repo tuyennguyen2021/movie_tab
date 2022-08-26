@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import MovieList from "./Component/MovieList";
 import "./App.css";
 import MovieHeading from "./Component/MovieHeading";
@@ -11,10 +10,12 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [searchValue, setsearchValue] = useState("avengers");
 
-  const getMovieRequest = async (searchValue) => {
+  const getMovieRequest = async () => {
     const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=bd62e1e`;
     const response = await fetch(url);
     const responseJson = await response.json();
+    console.log(responseJson);
+
     if (responseJson.Search) {
       setMovies(responseJson.Search);
     }
@@ -35,7 +36,9 @@ function App() {
 
   useEffect(() => {
     const movieFavourites = JSON.parse(localStorage.getItem("save-movie-list"));
-    setFavor(movieFavourites);
+    if (movieFavourites) {
+      setFavor(movieFavourites);
+    }
   }, []);
 
   const saveToLocalStorage = (items) => {
@@ -43,9 +46,11 @@ function App() {
   };
 
   const AddFavorMovie = (movie) => {
-    const newFavorList = { ...favor, movie };
-    setFavor(newFavorList);
-    saveToLocalStorage(newFavorList);
+    const newFavorList = new Set([...favor, movie]);
+    const uniqueSet = [...newFavorList];
+
+    setFavor(uniqueSet);
+    saveToLocalStorage(uniqueSet);
   };
 
   const removeFavouriteMovie = (movie) => {
